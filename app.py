@@ -1,5 +1,6 @@
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel,QLineEdit,QVBoxLayout,QWidget
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel,QMenu
 import sys
 
 
@@ -10,26 +11,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My app")
         self.setFixedSize(QSize(400,300))
 
-        self.label = QLabel("Click this window")
-        self.setCentralWidget(self.label)
-        self.setMouseTracking(True)
+    def contextMenuEvent(self, e) -> None:
+        context = QMenu(self)
+        context.addAction(QAction("test1", self))
+        context.addAction(QAction("test2", self))
+        context.addAction(QAction("test3", self))
+        context.exec(e.globalPos())
 
-    def mouseMoveEvent(self, e) -> None:
-        self.label.setText("mouseMoveEvent")
-
-    def mousePressEvent(self, e) -> None:
-        if e.button() == Qt.MouseButton.LeftButton:
-            self.label.setText('Left Mouse button pressed')
-        elif e.button() == Qt.MouseButton.RightButton:
-            self.label.setText('Right Mouse button  pressed')
-        elif e.button() == Qt.MouseButton.MiddleButton:
-            self.label.setText('MIDDLE Mouse button pressed')
-
-    def mouseReleaseEvent(self, e) -> None:
-        self.label.setText('Mouse released')
-
-    def mouseDoubleClickEvent(self, e) -> None:
-        self.label.setText("Mouse Doubleclicked")
 
 
 app = QApplication(sys.argv)
@@ -37,3 +25,21 @@ window = MainWindow()
 window.show()
 
 app.exec()
+
+
+#signal based approach
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.setWindowTitle("My app")
+#         self.setFixedSize(QSize(400,300))
+#         self.show()
+#         self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+#         self.customContextMenuRequested.connect(self.on_context_menu)
+#
+#     def on_context_menu(self, pos) -> None:
+#         context = QMenu(self)
+#         context.addAction(QAction("test1", self))
+#         context.addAction(QAction("test2", self))
+#         context.addAction(QAction("test3", self))
+#         context.exec(self.mapToGlobal(pos))
