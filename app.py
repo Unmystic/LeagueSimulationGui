@@ -4,7 +4,7 @@ from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QCheckBox, QComboBox, QListWidget, QLineEdit,
-    QLineEdit, QSpinBox, QDoubleSpinBox, QSlider
+    QLineEdit, QSpinBox, QDoubleSpinBox, QSlider, QDial
 )
 from PyQt6.QtCore import Qt, QSize
 
@@ -16,9 +16,8 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
         #self.setFixedSize(QSize(400, 300))
-        widget = QSlider(Qt.Orientation.Horizontal)
-        widget.setMinimum(2)
-        widget.setMaximum(20)
+        widget = QDial()
+        widget.setRange(2,20)
         widget.setSingleStep(2)
 
         widget.valueChanged.connect(self.value_changed)
