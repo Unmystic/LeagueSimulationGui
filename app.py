@@ -16,25 +16,35 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
         #self.setFixedSize(QSize(400, 300))
-        widget = QComboBox()
-        widget.addItems(["One", "Two", "Three"])
-
-        #Sends current index position
-        widget.currentIndexChanged.connect(self.index_changed)
-
-        # There is alternative signal to send text
-        widget.currentTextChanged.connect(self.text_changed)
-
-        widget.setEditable(True)
-        widget.setInsertPolicy(QComboBox.InsertPolicy.InsertAlphabetically)
-        widget.setMaxCount(10)
+        widget = QLineEdit()
+        widget.setMaxLength(2)
+        widget.setPlaceholderText("Enter number of teams")
+        # widget.setReadOnly(True)
+        widget.returnPressed.connect(self.return_pressed)
+        widget.selectionChanged.connect(self.selection_changed)
+        widget.textChanged.connect(self.text_changed)
+        widget.textEdited.connect(self.text_edited)
+        widget.setInputMask("00")
 
         self.setCentralWidget(widget)
 
-    def index_changed(self, i): # i for int
-        print(i)
-    def text_changed(self, s): # s for str
+    def return_pressed(self):
+        print("Return Pressed!")
+        self.centralWidget().setText("Boom!")
+
+    def selection_changed(self):
+        print("Selection changed")
+        print(self.centralWidget().selectedText())
+
+    def text_changed(self, s):
+        print("Text changed...")
         print(s)
+
+    def text_edited(self,s):
+        print("Text edited...")
+        print(s)
+
+
 
 
 
