@@ -1,34 +1,59 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout
+
 from PyQt6.QtGui import QPalette, QColor
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QStackedLayout,
+    QVBoxLayout,
+    QWidget,
+)
+
 
 class MainWindow(QMainWindow):
-
     def __init__(self):
-        super(MainWindow, self).__init__()
+        super().__init__()
 
         self.setWindowTitle("My App")
-        layout1 = QHBoxLayout()
-        layout2 = QVBoxLayout()
-        layout3 = QVBoxLayout()
 
-        layout1.setContentsMargins(0, 0, 0, 0)
-        layout1.setSpacing(0)
+        pagelayout = QVBoxLayout()
+        button_layout = QHBoxLayout()
+        self.stacklayout = QStackedLayout()
 
-        layout2.addWidget(Color('red'))
-        layout2.addWidget(Color('blue'))
-        layout2.addWidget(Color('white'))
+        pagelayout.addLayout(button_layout)
+        pagelayout.addLayout(self.stacklayout)
 
-        layout1.addLayout(layout2)
+        btn = QPushButton("red")
+        btn.pressed.connect(self.activate_tab_1)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("red"))
 
-        layout1.addWidget(Color('green'))
-        layout3.addWidget(Color("grey"))
-        layout3.addWidget(Color('purple'))
+        btn = QPushButton("green")
+        btn.pressed.connect(self.activate_tab_2)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("green"))
 
-        layout1.addLayout(layout3)
+        btn = QPushButton("yellow")
+        btn.pressed.connect(self.activate_tab_3)
+        button_layout.addWidget(btn)
+        self.stacklayout.addWidget(Color("yellow"))
+
         widget = QWidget()
-        widget.setLayout(layout1)
+        widget.setLayout(pagelayout)
         self.setCentralWidget(widget)
+
+    def activate_tab_1(self):
+        self.stacklayout.setCurrentIndex(0)
+
+    def activate_tab_2(self):
+        self.stacklayout.setCurrentIndex(1)
+
+    def activate_tab_3(self):
+        self.stacklayout.setCurrentIndex(2)
 
 
 class Color(QWidget):
