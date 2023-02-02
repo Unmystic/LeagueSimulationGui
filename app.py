@@ -1,45 +1,32 @@
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel,QMenu
 import sys
 
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import (
+    QMainWindow, QApplication,
+    QLabel, QCheckBox, QComboBox, QListWidget, QLineEdit,
+    QLineEdit, QSpinBox, QDoubleSpinBox, QSlider
+)
+from PyQt6.QtCore import Qt, QSize
 
-# Subclass MainWindow to customize your main window
+
 class MainWindow(QMainWindow):
+
     def __init__(self):
-        super().__init__()
-        self.setWindowTitle("My app")
-        self.setFixedSize(QSize(400,300))
+        super(MainWindow, self).__init__()
 
-    def contextMenuEvent(self, e) -> None:
-        context = QMenu(self)
-        context.addAction(QAction("test1", self))
-        context.addAction(QAction("test2", self))
-        context.addAction(QAction("test3", self))
-        context.exec(e.globalPos())
+        self.setWindowTitle("My App")
+        self.setFixedSize(QSize(400, 300))
+        widget = QLabel("Hellow")
+        font = widget.font()
+        font.setPointSize(30)
+        widget.setFont(font)
+        widget.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        widget.setPixmap(QPixmap('Lab.jpg'))
 
+        self.setCentralWidget(widget)
 
 
 app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-
+w = MainWindow()
+w.show()
 app.exec()
-
-
-#signal based approach
-# class MainWindow(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#         self.setWindowTitle("My app")
-#         self.setFixedSize(QSize(400,300))
-#         self.show()
-#         self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-#         self.customContextMenuRequested.connect(self.on_context_menu)
-#
-#     def on_context_menu(self, pos) -> None:
-#         context = QMenu(self)
-#         context.addAction(QAction("test1", self))
-#         context.addAction(QAction("test2", self))
-#         context.addAction(QAction("test3", self))
-#         context.exec(self.mapToGlobal(pos))
