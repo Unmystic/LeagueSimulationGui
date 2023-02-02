@@ -15,15 +15,27 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("My App")
-        self.setFixedSize(QSize(400, 300))
-        widget = QLabel("Hellow")
-        font = widget.font()
-        font.setPointSize(30)
-        widget.setFont(font)
-        widget.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
-        widget.setPixmap(QPixmap('Lab.jpg'))
+        #self.setFixedSize(QSize(400, 300))
+        widget = QComboBox()
+        widget.addItems(["One", "Two", "Three"])
+
+        #Sends current index position
+        widget.currentIndexChanged.connect(self.index_changed)
+
+        # There is alternative signal to send text
+        widget.currentTextChanged.connect(self.text_changed)
+
+        widget.setEditable(True)
+        widget.setInsertPolicy(QComboBox.InsertPolicy.InsertAlphabetically)
+        widget.setMaxCount(10)
 
         self.setCentralWidget(widget)
+
+    def index_changed(self, i): # i for int
+        print(i)
+    def text_changed(self, s): # s for str
+        print(s)
+
 
 
 app = QApplication(sys.argv)
