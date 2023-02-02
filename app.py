@@ -16,27 +16,28 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
         #self.setFixedSize(QSize(400, 300))
-        widget = QSpinBox()
-        # Or widget = QDoubleSpinBox()
+        widget = QSlider(Qt.Orientation.Horizontal)
         widget.setMinimum(2)
         widget.setMaximum(20)
-        # Or widget.setRange(2,20)
-
-        widget.setPrefix("Set ")
-        widget.setSuffix(" teams")
         widget.setSingleStep(2)
-        widget.lineEdit().setReadOnly(True)
 
         widget.valueChanged.connect(self.value_changed)
-        widget.textChanged.connect(self.value_change_str)
+        widget.sliderMoved.connect(self.slider_position)
+        widget.sliderPressed.connect(self.slider_pressed)
+        widget.sliderReleased.connect(self.slider_released)
 
         self.setCentralWidget(widget)
 
     def value_changed(self,i):
         print(i)
+    def slider_position(self,p):
+        print("position", p)
+    def slider_pressed(self):
+        print("Pressed!")
+    def slider_released(self):
+        print("Released!")
 
-    def value_change_str(self,s):
-        print(s)
+
 
 
 
