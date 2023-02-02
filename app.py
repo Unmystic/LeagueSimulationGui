@@ -16,35 +16,27 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
         #self.setFixedSize(QSize(400, 300))
-        widget = QLineEdit()
-        widget.setMaxLength(2)
-        widget.setPlaceholderText("Enter number of teams")
-        # widget.setReadOnly(True)
-        widget.returnPressed.connect(self.return_pressed)
-        widget.selectionChanged.connect(self.selection_changed)
-        widget.textChanged.connect(self.text_changed)
-        widget.textEdited.connect(self.text_edited)
-        widget.setInputMask("00")
+        widget = QSpinBox()
+        # Or widget = QDoubleSpinBox()
+        widget.setMinimum(2)
+        widget.setMaximum(20)
+        # Or widget.setRange(2,20)
+
+        widget.setPrefix("Set ")
+        widget.setSuffix(" teams")
+        widget.setSingleStep(2)
+        widget.lineEdit().setReadOnly(True)
+
+        widget.valueChanged.connect(self.value_changed)
+        widget.textChanged.connect(self.value_change_str)
 
         self.setCentralWidget(widget)
 
-    def return_pressed(self):
-        print("Return Pressed!")
-        self.centralWidget().setText("Boom!")
+    def value_changed(self,i):
+        print(i)
 
-    def selection_changed(self):
-        print("Selection changed")
-        print(self.centralWidget().selectedText())
-
-    def text_changed(self, s):
-        print("Text changed...")
+    def value_change_str(self,s):
         print(s)
-
-    def text_edited(self,s):
-        print("Text edited...")
-        print(s)
-
-
 
 
 
