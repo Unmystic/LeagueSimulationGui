@@ -1,13 +1,6 @@
 import sys
-
-from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import (
-    QMainWindow, QApplication,
-    QLabel, QCheckBox, QComboBox, QListWidget, QLineEdit,
-    QLineEdit, QSpinBox, QDoubleSpinBox, QSlider, QDial
-)
-from PyQt6.QtCore import Qt, QSize
-
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from PyQt6.QtGui import QPalette, QColor
 
 class MainWindow(QMainWindow):
 
@@ -15,32 +8,28 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("My App")
-        #self.setFixedSize(QSize(400, 300))
-        widget = QDial()
-        widget.setRange(2,20)
-        widget.setSingleStep(2)
-
-        widget.valueChanged.connect(self.value_changed)
-        widget.sliderMoved.connect(self.slider_position)
-        widget.sliderPressed.connect(self.slider_pressed)
-        widget.sliderReleased.connect(self.slider_released)
-
+        layout = QVBoxLayout()
+        layout.addWidget(Color('red'))
+        layout.addWidget(Color('blue'))
+        layout.addWidget(Color('white'))
+        widget = QWidget()
+        widget.setLayout(layout)
         self.setCentralWidget(widget)
 
-    def value_changed(self,i):
-        print(i)
-    def slider_position(self,p):
-        print("position", p)
-    def slider_pressed(self):
-        print("Pressed!")
-    def slider_released(self):
-        print("Released!")
 
+class Color(QWidget):
+    def __init__(self, color):
+        super(Color, self).__init__()
+        self.setAutoFillBackground(True)
 
-
+        palette = self.palette()
+        palette.setColor(QPalette.ColorRole.Window, QColor(color))
+        self.setPalette(palette)
 
 
 app = QApplication(sys.argv)
-w = MainWindow()
-w.show()
+
+window = MainWindow()
+window.show()
+
 app.exec()
