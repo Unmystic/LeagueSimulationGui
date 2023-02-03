@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import (
     QMainWindow, QApplication,
     QLabel, QToolBar, QStatusBar, QCheckBox
 )
-from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtGui import QAction, QIcon, QKeySequence
 from PyQt6.QtCore import Qt, QSize
 
 
@@ -27,6 +27,10 @@ class MainWindow(QMainWindow):
         button_action.setStatusTip("This is your button")
         button_action.triggered.connect(self.onMyToolBarButtonClick)
         button_action.setCheckable(True)
+        # You can enter keyboard shortcuts using either key names(Ctrl+p)
+        # Qt.namespace identifiers(Qt.CTRL + Qt.Key_P)
+        # or system agnostic identifiers( QkeySequence.StandartKey.Print)
+        button_action.setShortcut(QKeySequence("Ctrl+p"))
         toolbar.addAction(button_action)
 
         toolbar.addSeparator()
@@ -41,6 +45,15 @@ class MainWindow(QMainWindow):
         toolbar.addWidget(QCheckBox())
 
         self.setStatusBar(QStatusBar(self))
+
+        menu = self.menuBar()
+
+        file_menu = menu.addMenu("&File")
+        file_menu.addAction(button_action)
+        file_menu.addSeparator()
+        file_submenu = file_menu.addMenu("Submenu")
+        file_submenu.addAction(button_action2)
+
 
     def onMyToolBarButtonClick(self, s):
         print("click", s)
