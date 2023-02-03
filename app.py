@@ -1,6 +1,6 @@
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QDialog, QDialogButtonBox, QVBoxLayout, QLabel
+from PyQt6.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QPushButton
 
 
 class MainWindow(QMainWindow):
@@ -14,32 +14,21 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(button)
 
     def button_clicked(self, s):
-        print("click", s)
 
-        dlg = CustomDialog(self)
-        if dlg.exec():
-            print("Success!!")
+        button = QMessageBox.critical(
+            self,
+            "Question dialog",
+            "The longer message",
+            buttons=QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.NoToAll | QMessageBox.StandardButton.Ignore,
+            defaultButton=QMessageBox.StandardButton.Discard,
+        )
+
+        if button == QMessageBox.StandardButton.Discard:
+            print("Discard!")
+        elif button == QMessageBox.StandardButton.NoToAll:
+            print("No to all!!")
         else:
-            print("Denied!")
-
-class CustomDialog(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.setWindowTitle("Hello!!!")
-
-        QBtn = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
-
-        self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message = QLabel("What should we do?")
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.buttonBox)
-        self.setLayout(self.layout)
-
+            print("Ignore!")
 
 app = QApplication(sys.argv)
 
