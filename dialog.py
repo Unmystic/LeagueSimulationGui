@@ -56,18 +56,29 @@ class Ui_Dialog(object):
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.buttonBox)
+        self.label.setBuddy(self.lineEdit)
+        self.label_2.setBuddy(self.dateEdit)
+        self.label_3.setBuddy(self.comboBox_2)
+        self.label_4.setBuddy(self.comboBox)
+        self.label_5.setBuddy(self.doubleSpinBox)
+        self.label_6.setBuddy(self.textEdit)
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
         self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        Dialog.setTabOrder(self.lineEdit, self.dateEdit)
+        Dialog.setTabOrder(self.dateEdit, self.comboBox_2)
+        Dialog.setTabOrder(self.comboBox_2, self.comboBox)
+        Dialog.setTabOrder(self.comboBox, self.doubleSpinBox)
+        Dialog.setTabOrder(self.doubleSpinBox, self.textEdit)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "Employee"))
-        self.label_2.setText(_translate("Dialog", "Employ date"))
-        self.label_3.setText(_translate("Dialog", "Department"))
-        self.label_4.setText(_translate("Dialog", "Position"))
-        self.label_5.setText(_translate("Dialog", "Annual salary"))
-        self.label_6.setText(_translate("Dialog", "Job description"))
+        self.label.setText(_translate("Dialog", "Emplo&yee"))
+        self.label_2.setText(_translate("Dialog", "&Employ date"))
+        self.label_3.setText(_translate("Dialog", "&Department"))
+        self.label_4.setText(_translate("Dialog", "&Position"))
+        self.label_5.setText(_translate("Dialog", "Annual &salary"))
+        self.label_6.setText(_translate("Dialog", "&Job description"))
