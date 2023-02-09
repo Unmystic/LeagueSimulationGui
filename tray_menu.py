@@ -5,7 +5,29 @@ app = QApplication([])
 app.setQuitOnLastWindowClosed(False)
 
 # Create the icon
-icon = QIcon("assets/img/android.png")
+icon = QIcon("assets/img/color.png")
+
+clipboard = QApplication.clipboard()
+dialog = QColorDialog()
+
+def copy_color_hex():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText(color.name())
+
+def copy_color_rgb():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText("rgb(%d, %d, %d)" % (
+            color.red(), color.green(), color.blue()
+        ))
+
+def copy_color_hsv():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText("hsv(%d, %d, %d)" % (
+            color.hue(), color.saturation(), color.value()
+        ))
 
 # Create the tray
 tray = QSystemTrayIcon()
@@ -14,10 +36,18 @@ tray.setVisible(True)
 
 # Create the menu
 menu = QMenu()
-action = QAction("A menu item")
-menu.addAction(action)
+action1 = QAction("Hex")
+action1.triggered.connect(copy_color_hex)
+menu.addAction(action1)
 
-# Add a Quit option to the menu.
+action2 = QAction("RGB")
+action2.triggered.connect(copy_color_rgb)
+menu.addAction(action2)
+
+action3 = QAction("HSV")
+action3.triggered.connect(copy_color_hsv)
+menu.addAction(action3)
+
 quit = QAction("Quit")
 quit.triggered.connect(app.quit)
 menu.addAction(quit)
