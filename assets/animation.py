@@ -2,7 +2,9 @@ import sys
 
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QWidget
-from PyQt6.QtCore import QPropertyAnimation, QPoint, QEasingCurve
+from PyQt6.QtCore import (
+    QPropertyAnimation, QSequentialAnimationGroup, QPoint, QSize)
+
 
 class Window(QWidget):
     def __init__(self):
@@ -12,10 +14,15 @@ class Window(QWidget):
         self.child.setStyleSheet("background-color:red;border-radius:15px;")
         self.child.resize(100, 100)
         self.anim = QPropertyAnimation(self.child, b"pos")
-        self.anim.setEasingCurve(QEasingCurve.Type.OutBounce)
-        self.anim.setEndValue(QPoint(500, 500))
+        self.anim.setEndValue(QPoint(200, 200))
         self.anim.setDuration(1500)
-        self.anim.start()
+        self.anim_2 = QPropertyAnimation(self.child, b"size")
+        self.anim_2.setEndValue(QSize(250, 150))
+        self.anim_2.setDuration(2000)
+        self.anim_group = QSequentialAnimationGroup()
+        self.anim_group.addAnimation(self.anim)
+        self.anim_group.addAnimation(self.anim_2)
+        self.anim_group.start()
 
 app = QtWidgets.QApplication(sys.argv)
 window = Window()
