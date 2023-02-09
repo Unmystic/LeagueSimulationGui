@@ -1,30 +1,26 @@
-import sys
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
+from animated_toggle import AnimatedToggle
 
-from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QWidget
-from PyQt6.QtCore import (
-    QPropertyAnimation, QSequentialAnimationGroup, QPoint, QSize)
+app = QApplication([])
 
+window = QWidget()
 
-class Window(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.resize(600, 600)
-        self.child = QWidget(self)
-        self.child.setStyleSheet("background-color:red;border-radius:15px;")
-        self.child.resize(100, 100)
-        self.anim = QPropertyAnimation(self.child, b"pos")
-        self.anim.setEndValue(QPoint(200, 200))
-        self.anim.setDuration(1500)
-        self.anim_2 = QPropertyAnimation(self.child, b"size")
-        self.anim_2.setEndValue(QSize(250, 150))
-        self.anim_2.setDuration(2000)
-        self.anim_group = QSequentialAnimationGroup()
-        self.anim_group.addAnimation(self.anim)
-        self.anim_group.addAnimation(self.anim_2)
-        self.anim_group.start()
+mainToggle = AnimatedToggle()
+secondaryToggle = AnimatedToggle(
+        checked_color="#FFB000",
+        pulse_checked_color="#44FFB000"
+)
+mainToggle.setFixedSize(mainToggle.sizeHint())
+secondaryToggle.setFixedSize(mainToggle.sizeHint())
 
-app = QtWidgets.QApplication(sys.argv)
-window = Window()
+window.setLayout(QVBoxLayout())
+window.layout().addWidget(QLabel("Main Toggle"))
+window.layout().addWidget(mainToggle)
+
+window.layout().addWidget(QLabel("Secondary Toggle"))
+window.layout().addWidget(secondaryToggle)
+
+mainToggle.stateChanged.connect(secondaryToggle.setChecked)
+
 window.show()
 app.exec()
