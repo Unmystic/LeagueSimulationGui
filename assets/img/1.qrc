@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>Lab.jpg</file>
+    <file>ball.ico</file>
+    <file>calendar.png</file>
+    <file>color.png</file>
+    <file>cross.png</file>
+    <file>tick.png</file>
+    <file>ui-button.png</file>
+  </qresource>
+</RCC>
