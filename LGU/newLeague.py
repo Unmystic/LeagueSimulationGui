@@ -10,18 +10,26 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 class NewLeague_Dialog(object):
+
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(465, 523)
-        Dialog.setAutoFillBackground(True)
+        Dialog.resize(465, 546)
+        Dialog.setAutoFillBackground(False)
+        Dialog.setStyleSheet("QDialog{\n"
+"background-color:rgb(211, 255, 222);\n"
+"}")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(parent=Dialog)
+        self.label.setMinimumSize(QtCore.QSize(200, 50))
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
         self.spinBox = QtWidgets.QSpinBox(parent=Dialog)
+        self.spinBox.setMinimumSize(QtCore.QSize(45, 30))
         self.spinBox.setWrapping(False)
         self.spinBox.setFrame(True)
         self.spinBox.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -36,36 +44,77 @@ class NewLeague_Dialog(object):
         self.spinBox.setStepType(QtWidgets.QAbstractSpinBox.StepType.DefaultStepType)
         self.spinBox.setObjectName("spinBox")
         self.horizontalLayout.addWidget(self.spinBox)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(88, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.groupBox = QtWidgets.QGroupBox(parent=Dialog)
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
-        self.gridLayout = QtWidgets.QGridLayout(self.groupBox)
-        self.gridLayout.setObjectName("gridLayout")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.groupBox)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.checkBox = QtWidgets.QCheckBox(parent=self.groupBox)
+        self.checkBox.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        self.checkBox.setFont(font)
         self.checkBox.setObjectName("checkBox")
-        self.gridLayout.addWidget(self.checkBox, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.checkBox)
+        self.lineEdit = QtWidgets.QLineEdit(parent=self.groupBox)
+        self.lineEdit.setEnabled(False)
+        self.lineEdit.setMinimumSize(QtCore.QSize(165, 30))
+        self.lineEdit.setMaximumSize(QtCore.QSize(250, 16777215))
+        self.lineEdit.setObjectName("lineEdit")
+        self.verticalLayout_3.addWidget(self.lineEdit)
+        self.label_teamStyle = QtWidgets.QLabel(parent=self.groupBox)
+        self.label_teamStyle.setMinimumSize(QtCore.QSize(120, 30))
+        self.label_teamStyle.setMaximumSize(QtCore.QSize(150, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setUnderline(True)
+        self.label_teamStyle.setFont(font)
+        self.label_teamStyle.setObjectName("label_teamStyle")
+        self.verticalLayout_3.addWidget(self.label_teamStyle)
         self.comboBox = QtWidgets.QComboBox(parent=self.groupBox)
         self.comboBox.setEnabled(False)
+        self.comboBox.setMinimumSize(QtCore.QSize(110, 30))
+        self.comboBox.setMaximumSize(QtCore.QSize(20, 16777215))
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
-        self.gridLayout.addWidget(self.comboBox, 1, 1, 1, 1)
-        self.label_teamStyle = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_teamStyle.setObjectName("label_teamStyle")
-        self.gridLayout.addWidget(self.label_teamStyle, 0, 1, 1, 1)
+        self.verticalLayout_3.addWidget(self.comboBox)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem2)
         self.pushCreateTeam = QtWidgets.QPushButton(parent=self.groupBox)
+        self.pushCreateTeam.setEnabled(False)
+        self.pushCreateTeam.setMaximumSize(QtCore.QSize(125, 40))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(11)
+        font.setBold(True)
+        self.pushCreateTeam.setFont(font)
+        self.pushCreateTeam.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(202, 202, 202);\n"
+"    border-style: outset;\n"
+"    border-radius: 10px;\n"
+"    min-width: 5em;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: green;\n"
+"    border-style: inset;\n"
+"}")
         self.pushCreateTeam.setObjectName("pushCreateTeam")
-        self.gridLayout.addWidget(self.pushCreateTeam, 3, 0, 1, 2)
-        self.lineEdit = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.lineEdit.setEnabled(False)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 1, 0, 1, 1)
+        self.horizontalLayout_3.addWidget(self.pushCreateTeam)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.addWidget(self.groupBox)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -86,32 +135,28 @@ class NewLeague_Dialog(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
         self.retranslateUi(Dialog)
+        self.checkBox.toggled['bool'].connect(self.pushCreateTeam.setEnabled) # type: ignore
         self.checkBox.toggled['bool'].connect(self.lineEdit.setEnabled) # type: ignore
         self.checkBox.toggled['bool'].connect(self.comboBox.setEnabled) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+
+
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:700; font-style:italic;\">Enter number of teams</span><span style=\" font-size:12pt; font-style:italic;\"/><span style=\" font-size:12pt; font-style:italic; text-decoration: underline;\">(max:20</span><span style=\" font-size:12pt; font-style:italic;\">)</span></p></body></html>"))
+        self.label.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700; font-style:italic;\">Enter number of teams:</span></p></body></html>"))
         self.checkBox.setText(_translate("Dialog", "Create your  own team"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "Input team name"))
+        self.label_teamStyle.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:700;\">Choose Team Style</span></p></body></html>"))
         self.comboBox.setItemText(0, _translate("Dialog", "Balanced"))
         self.comboBox.setItemText(1, _translate("Dialog", "Very Defensive"))
         self.comboBox.setItemText(2, _translate("Dialog", "Defensive"))
         self.comboBox.setItemText(3, _translate("Dialog", "Attacking"))
         self.comboBox.setItemText(4, _translate("Dialog", "Very Attacking"))
-        self.label_teamStyle.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:700;\">Choose Team Style</span></p></body></html>"))
         self.pushCreateTeam.setText(_translate("Dialog", "Create Team"))
-        self.lineEdit.setPlaceholderText(_translate("Dialog", "Input team name"))
         self.pushAddOthers.setText(_translate("Dialog", "Populate League"))
         self.pushStartSimulation.setText(_translate("Dialog", "Start Simulation"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec())

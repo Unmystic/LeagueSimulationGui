@@ -2,7 +2,7 @@ import sys
 
 from PyQt6.QtWidgets import QMainWindow, QDialog, QMessageBox, QTableWidgetItem
 from mainw import Ui_MainWindow
-from newLeague import NewLeague_Dialog
+from create_league import NewLeague
 
 
 class LeagueSimulator(QMainWindow, Ui_MainWindow):
@@ -19,12 +19,10 @@ class LeagueSimulator(QMainWindow, Ui_MainWindow):
         self.actionExit.triggered.connect(self.exit_button)
 
     def new_league(self):
-        dialog = QDialog()
-        ui = NewLeague_Dialog()
+        dialog = NewLeague()
 
-        ui.setupUi(dialog)
-        ui.spinBox.lineEdit().setReadOnly(True)
         dialog.exec()
+
 
     def exit_button(self):
         sys.exit()

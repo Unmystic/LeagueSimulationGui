@@ -23,13 +23,16 @@
    <iconset resource="assets/img/1.qrc">
     <normaloff>:/newPrefix/ball.ico</normaloff>:/newPrefix/ball.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Triangular</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">QWidget{
-background-color:rgb(192,192,192);
+background-color:rgb(211, 255, 222);
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">

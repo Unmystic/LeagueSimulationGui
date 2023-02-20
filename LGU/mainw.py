@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabShape(QtWidgets.QTabWidget.TabShape.Triangular)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setStyleSheet("QWidget{\n"
-"background-color:rgb(192,192,192);\n"
+"background-color:rgb(211, 255, 222);\n"
 "}")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
         self.label.setMinimumSize(QtCore.QSize(620, 320))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("assets/images/Lab.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("assets/images/animals_soccer.png"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
