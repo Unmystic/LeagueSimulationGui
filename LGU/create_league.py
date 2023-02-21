@@ -8,6 +8,7 @@ from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QMainWindow, QDialog, QMessageBox, QTableWidgetItem
 
 from newLeague import NewLeague_Dialog
+from simulate_league import League
 
 
 class NewLeague(QDialog,NewLeague_Dialog):
@@ -18,6 +19,8 @@ class NewLeague(QDialog,NewLeague_Dialog):
         self.setupUi(self)
         self.show()
 
+        self.league = None
+
         # Correcting ui design
         self.spinBox.lineEdit().setReadOnly(True)
         self.pushStartSimulation.setEnabled(False)
@@ -25,6 +28,10 @@ class NewLeague(QDialog,NewLeague_Dialog):
         # Sending signals from buttons to functions
         self.pushCreateTeam.clicked.connect(self.create_team)
         self.pushAddOthers.clicked.connect(self.populate_league)
+
+        # Redirecting to new window
+        self.pushStartSimulation.clicked.connect(self.league_simulation)
+
 
 
     def create_team(self):
@@ -72,6 +79,12 @@ class NewLeague(QDialog,NewLeague_Dialog):
             writer = csv.DictWriter(file, fieldnames=["name", "rating"])
             for team in self.teams:
                 writer.writerow({"name": team["name"], "rating": team["rating"]})
+
+    def league_simulation(self):
+        if self.league == None:
+            self.league = League()
+            self.league.exec()
+            self.close()
 
 
 
