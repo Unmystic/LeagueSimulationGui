@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import QMainWindow, QDialog, QMessageBox, QTableWidgetItem,
 from Scripts.tournament import Ui_Form
 from Scripts.schedule import Schedule
 from Scripts.match_engine import Match
-from Scripts import check_HoF
+import Scripts.check_HoF
 
 
 class League(QDialog, Ui_Form):
@@ -49,13 +49,17 @@ class League(QDialog, Ui_Form):
 
     def create_table(self):
         with open("Scripts/data/teams.csv", "r") as file:
-            reader = csv.DictReader(file, fieldnames=["name", "rating"])
+            reader = csv.DictReader(file, fieldnames=["name", "attackRating", "defenceRating", "teamCohesion"])
             for row in reader:
-                self.teams[row["name"]] = row["rating"]
+                self.teams[row["name"]] = {"attackRating": float(row["attackRating"]), "defenceRating": float(row["defenceRating"]),
+                                           "teamCohesion": float(row["teamCohesion"])}
 
         for team in self.teams:
+            teamRating = round(statistics.fmean(
+                [self.teams[team]["attackRating"], self.teams[team]["defenceRating"],
+                 self.teams[team]["teamCohesion"]]), 2)
             self.table.append(
-                {'name': team, 'rating': self.teams[team], 'gamesPlayed': 0, 'goalsScored': 0, 'goalsConceded': 0,
+                {'name': team, 'rating': teamRating, 'gamesPlayed': 0, 'goalsScored': 0, 'goalsConceded': 0,
                  'goalDifference': 0, 'wins': 0, 'draws': 0, 'losses': 0, 'points': 0})
 
     def draw_table(self):
@@ -85,11 +89,16 @@ class League(QDialog, Ui_Form):
                 home["tour"] = row["tour"]
                 home["name"] = row["homeTeam"]
                 home["rating"] = self.teams[row["homeTeam"]]
+                # Adding teamCohesion rating with each game
+                self.teams[row["homeTeam"]]["teamCohesion"] = float(self.teams[row["homeTeam"]]["teamCohesion"]) + 0.25
+
 
                 away = {}
                 away["tour"] = row["tour"]
                 away["name"] = row["awayTeam"]
                 away["rating"] = self.teams[row["awayTeam"]]
+                # Adding teamCohesion rating with each game
+                self.teams[row["awayTeam"]]["teamCohesion"] = float(self.teams[row["awayTeam"]]["teamCohesion"]) + 0.25
 
                 self.calendar.append([{"home": home, "away": away}])
 
@@ -124,8 +133,8 @@ class League(QDialog, Ui_Form):
         self.update_label()
 
         if self.table[0]['losses'] == 0:
-            hof_table = check_HoF.table_hof()
-            check_HoF.compare_results(team=self.table[0], hof_table=hof_table)
+            hof_table = Scripts.check_HoF.table_hof()
+            Scripts.check_HoF.compare_results(team=self.table[0], hof_table=hof_table)
 
 
     def Myfunc(self, e):
@@ -155,6 +164,7 @@ class League(QDialog, Ui_Form):
             match = Match(self.calendar[i][0]['home'], self.calendar[i][0]['away'], self.table)
             result, self.table = match.match_data()
             self.Match_results.append(result)
+            #print(self.calendar[i][0]['home']['rating']['teamCohesion'], self.calendar[i][0]['away']['rating']['teamCohesion'])
 
         for i in range(games_in_tour):
             self.calendar.pop(0)
@@ -165,8 +175,8 @@ class League(QDialog, Ui_Form):
         self.update_label()
 
         if len(self.calendar) == 0 and self.table[0]['losses'] == 0:
-            hof_table = check_HoF.table_hof()
-            check_HoF.compare_results(team=self.table[0], hof_table=hof_table)
+            hof_table = Scripts.check_HoF.table_hof()
+            Scripts.check_HoF.compare_results(team=self.table[0], hof_table=hof_table)
 
 
 

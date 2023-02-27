@@ -16,8 +16,11 @@ class Match:
 
     def result(self, x, y):
         """Determine result of the game based on goals scored"""
-        sc1 = self.goals(1.05 * float(x["rating"]))
-        sc2 = self.goals(0.95 * float(y["rating"]))
+        moments = random.choice([3, 4, 5, 6, 7])
+        sc1 = self.goals(attack=(1.05 * x["rating"]['attackRating'] * (x["rating"]['teamCohesion'] / 100)),
+                         defence=y["rating"]['defenceRating'], moments=moments)
+        sc2 = self.goals(attack=(y["rating"]['attackRating'] * (y["rating"]['teamCohesion'] / 100)),
+                         defence=x["rating"]['defenceRating'], moments=moments)
 
         if sc1 > sc2:
             for team in self.table:
@@ -101,30 +104,12 @@ class Match:
 
             return f"Team {x['name']} draw Team {y['name']} with score {sc1}:{sc2}"
 
-    def goals(self, r):
+    def goals(self, attack, defence, moments):
         """Determine goals scored by  the team based on rating"""
         # print(r)
-        rating = r
         goal = [0, 1]
-        weights = [50, 50]
-        if rating < 70:
-            weights = [60, 40]
-        elif 70 < rating < 75:
-            weights = [50, 50]
-        elif 75 < rating < 80:
-            weights = [45, 55]
-        elif 80 < rating < 85:
-            weights = [40, 60]
-        elif 85 < rating < 90:
-            weights = [35, 65]
-        elif 90 < rating < 95:
-            weights = [25, 75]
-        elif rating > 95:
-            weights = [10, 90]
-
-        # weights = [100 - rating , rating]
-        # print(weights)
-
-        final = round(sum(random.choices(goal, weights, k=5)))
+        scoring_chance = 50 + (attack - defence)
+        weights = [100 - scoring_chance,scoring_chance]
+        final = round(sum(random.choices(goal, weights, k=moments)))
 
         return final
